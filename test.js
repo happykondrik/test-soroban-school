@@ -1,10 +1,3 @@
-
-// Djinni.co
-// Яков Сытник
-// Руководитель отдела разработки в Soroban school
-
-// **Впечатлен! Найдите меня в телеграмме jakob_sytnik пришлите свое резюме, ожидания по зарплате и результат выполнения тестового задания**
-
 // **ТЕСТОВОЕ ЗАДАНИЕ**
 
 // Поле name -> хранит first_name и last_name последовательно
@@ -45,7 +38,9 @@ var schemaData = [
 
 console.log(schemaData);
 
-function dataSelection(animal, age) {
+var ageRange = {from: 1, to: 100}
+
+function dataSelection(animal, ageRange) {
 
     var newSchemaData = JSON.parse(JSON.stringify(schemaData));
 
@@ -64,7 +59,7 @@ function dataSelection(animal, age) {
 
     console.log(convertDate(now));
 
-    console.log(newSchemaData[1].dob);
+    console.log(newSchemaData);
 
     // var getCurrentAgeResults = newSchemaData.map(i => {
     //     i.dob = Number(convertDate(now)) - Number(i.dob);
@@ -96,4 +91,4 @@ function dataSelection(animal, age) {
 
 }
 
-console.log(dataSelection("dog"));
+console.log(dataSelection("dog", {from: 1, to: 100}));
