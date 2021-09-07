@@ -38,57 +38,33 @@ var schemaData = [
 
 console.log(schemaData);
 
-var ageRange = {from: 1, to: 100}
+var ageRange = { from: 1, to: 100 }
 
 function dataSelection(animal, ageRange) {
 
     var newSchemaData = JSON.parse(JSON.stringify(schemaData));
 
     var now = new Date();
-
-    function convertDate(date) {
-        var yyyy = date.getFullYear().toString();
-        var mm = (date.getMonth() + 1).toString();
-        var dd = date.getDate().toString();
-
-        var mmChars = mm.split('');
-        var ddChars = dd.split('');
-
-        return (ddChars[1] ? dd : "0" + ddChars[0]) + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + yyyy;
-    }
-
-    console.log(convertDate(now));
-
-    console.log(newSchemaData);
-
-    // var getCurrentAgeResults = newSchemaData.map(i => {
-    //     i.dob = Number(convertDate(now)) - Number(i.dob);
-    //     return i;
-    // });
-
-    // console.log(getCurrentAgeResults);
+    var pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
 
     var results = newSchemaData.map(i => {
-        i.first_name = i.name;
-        i.last_name = i.name;
+        i.first_name = i.name.split(" ").splice(0, 1).join();
+        i.last_name = i.name.split(" ").splice(1, 1).join();
         delete i.name;
-        i.age = i.dob;
+        i.age = Math.round((new Date(i.dob.replace(/-/g, ".").replace(pattern, '$3-$2-$1')) - now)/-31600800000);
         delete i.dob;
         i.favorite_animals = i.favorite_animals;
 
         return i;
-    })
-
-    
-
-
-    console.log(results);
+    });
 
     var someAnimals = animals => animals === animal;
     var favoriteAnimals = results.filter(obj => obj.favorite_animals.some(someAnimals));
+
+    
 
     return favoriteAnimals;
 
 }
 
-console.log(dataSelection("dog", {from: 1, to: 100}));
+console.log(dataSelection("dog", { from: 1, to: 100 }));
